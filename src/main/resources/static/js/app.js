@@ -4,6 +4,7 @@ console.log("App.js cargado correctamente");
 const API = "/api";
 
 document.addEventListener("DOMContentLoaded", () => {
+  loadHome();   // 🔥 Mostrar Home primero
   loadCadis();
 });
 
