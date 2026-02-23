@@ -1,10 +1,9 @@
 console.log("App.js cargado correctamente");
 
-// 🔥 CAMBIO IMPORTANTE: usar ruta relativa
 const API = "/api";
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadHome();   // 🔥 Mostrar Home primero
+  loadHome();
   loadCadis();
 });
 
@@ -23,10 +22,14 @@ async function loadCadis() {
   const cadis = await res.json();
 
   const menu = document.getElementById("menu");
-  menu.innerHTML = ""; // limpiar antes de cargar
+
+  // 🔥 Solo borrar elementos dinámicos
+  document.querySelectorAll(".cadi-item, .area-item")
+    .forEach(e => e.remove());
 
   cadis.forEach((cadi) => {
     const li = document.createElement("li");
+    li.classList.add("cadi-item");
     li.textContent = "📚 " + cadi.nombre;
     li.onclick = () => loadReas(cadi.id, li);
     menu.appendChild(li);
@@ -37,7 +40,8 @@ async function loadCadis() {
    CARGAR REAS POR CADI
 ================================ */
 async function loadReas(cadiId, element) {
-  document.querySelectorAll(".area-item").forEach((e) => e.remove());
+
+  document.querySelectorAll(".area-item").forEach(e => e.remove());
 
   const res = await fetch(`${API}/reas`);
   const reas = await res.json();
@@ -164,7 +168,6 @@ function subirArchivo(id) {
    VER ARCHIVO
 ================================ */
 function verArchivo(ruta) {
-  // 🔥 CAMBIO IMPORTANTE: quitar localhost
   window.open(`/uploads/${ruta}`, "_blank");
 }
 
