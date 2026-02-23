@@ -1,5 +1,7 @@
 console.log("App.js cargado correctamente");
-const API = "http://localhost:8080/api";
+
+// 🔥 CAMBIO IMPORTANTE: usar ruta relativa
+const API = "/api";
 
 document.addEventListener("DOMContentLoaded", () => {
   loadCadis();
@@ -20,6 +22,7 @@ async function loadCadis() {
   const cadis = await res.json();
 
   const menu = document.getElementById("menu");
+  menu.innerHTML = ""; // limpiar antes de cargar
 
   cadis.forEach((cadi) => {
     const li = document.createElement("li");
@@ -150,15 +153,23 @@ function subirArchivo(id) {
     });
 
     alert("Archivo subido");
+    location.reload();
   };
 
   input.click();
 }
 
+/* ===============================
+   VER ARCHIVO
+================================ */
 function verArchivo(ruta) {
-  window.open(`http://localhost:8080/uploads/${ruta}`, "_blank");
+  // 🔥 CAMBIO IMPORTANTE: quitar localhost
+  window.open(`/uploads/${ruta}`, "_blank");
 }
 
+/* ===============================
+   ELIMINAR ARCHIVO
+================================ */
 async function eliminarArchivo(id) {
   await fetch(`${API}/actividades/${id}/archivo`, {
     method: "DELETE",
